@@ -1,50 +1,103 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="icon" type="image/png" href="https://www.teamcyberino.stockportdojo.org.uk/HackMarch2018/Media/favicon-32x32.png" sizes="32x32" />
 <style>
-#canvas {
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-z-index: -1;
-background-color: #262626;
+#canvas{
+	position:fixed;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	z-index: -1;
+	background-color: #262626;
 }
 .container{
 	z-index: 1;
 }
+
 body, html, a {
 				cursor: url(https://www.teamcyberino.stockportdojo.org.uk/HackMarch2018/Media/cur.png) , pointer;
 				height: 100%;
 }
 </style>
-<title>
-Book a ticket
-</title>
+<title>Create Account</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
-<link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32" />
+<link rel="icon" type="image/png" href="https://teamcyberino.stockportdojo.org.uk/HackMarch2018/favicon-32x32.png" sizes="32x32" />
 <link href="https://www.teamcyberino.stockportdojo.org.uk/HackMarch2018/Style/Button.css" rel="stylesheet">
 <link href="https://www.teamcyberino.stockportdojo.org.uk/HackMarch2018/Style/Button2.css" rel="stylesheet">
 </head>
-<body oncontextmenu="return false">
+<body>
 <canvas id="canvas">
 </canvas>
 <div class="container">
+<font face="Acme" color="white" size="+3">
+<?php
+// define variables and set to empty values
+$emailErr = $passwordErr = $confirm_passwordErr = $pathToUpload = "";
+$email = $password = $confirm_password = $pathToUpload = "";
+
+if (empty($_POST["email"])) {
+    $emailErr = "Please enter an E-Mail";
+  } else {
+    // check if e-mail address is well-formed
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+      $emailErr = "Invalid email format"; 
+    } else {
+		$email = test_input($_POST["email"]);
+	}
+  }
+		
+  if (empty($_POST["password"])) {
+    $passwordErr = "Please enter a password";
+  } else {
+    $password = test_input($_POST["password"]);
+  }
+
+  if (empty($_POST["confirm_password"])) {
+    $confirm_passwordErr = "Please confirm your password";
+  } else {
+	  if ($password==$confirm_password) {
+    $confirm_password = test_input($_POST["confirm_password"]);
+  } else {
+	  $confirm_passwordErr = "Passwords don't match";
+	}
+  }
+
+  
+  
+function test_input($data) {
+  $data = trim($data);
+  $data = stripslashes($data);
+  $data = htmlspecialchars($data);
+  return $data;
+}
+
+
+?>
 <center>
-<font face="Acme" size="50" color="white">If you'd like to come to CoderDojo, please book a ticket here...</font>
-</center>
-<br><br>
-<center>
-<font face="Acme" size="5" color="white">...but first you need to create an account or log in.</font>
-</center>
-<br><br>
-<center>
-<a href="CreateAccount/SignUp.php"><img src="https://www.teamcyberino.stockportdojo.org.uk/HackMarch2018/Media/CA.png" class="effectscale"></a>
-<br><br>
-<center>
-<a href="CreateAccount/login.php"><img src="https://www.teamcyberino.stockportdojo.org.uk/HackMarch2018/Media/LI.png" class="effectscale"></a>
+<h1>Create an Account</h1>
+<p>* Required Field</p>
+<br>
+<form method="post" action="Submit.php" enctype="multipart/form-data">  
+  E-Mail: <input type="text" name="email" value="<?php echo $email;?>" style="height:30px;font-size:14pt;">
+  <span class="error">* <?php echo $emailErr;?></span>
+  <br><br>
+  Password: <input type="password" name="password" value="<?php echo $password;?>" style="height:30px;font-size:14pt;">
+  <span class="error">* <?php echo $passwordErr;?></span>
+  <br><br>
+  Repeat Password: <input type="password" name="confirm_password" value="<?php echo $confirm_password;?>" style="height:30px;font-size:14pt;">
+  <span class="error">* <?php echo $confirm_passwordErr;?></span>
+  <br><br>
+  Profile Picture: <input type="file" name="file" id="file" value="<?php echo $pathToUpload;?>">
+  <span class="error"><?php echo $pathToUploadErr;?></span>
+  <br><br>
+  <input type="image" src="button_submit.png" value="Submit" name="submit" class="effectscale">
+  </font>
+</form>
+  <font face="Acme" color="white" size="+4">
+            <p>Already have an account?<span class="tab"><a href="login.php"><img src="https://www.teamcyberino.stockportdojo.org.uk/HackMarch2018/Media/LI.png" style="height: 40px;" class="effectscale"></a></span></p>
+			</font>
 </center>
 </div>
 <script>
@@ -141,6 +194,18 @@ setInterval(function() {
     for (var e in elements)
 		elements[e].draw(ctx, time);
 }, 10);
+$(document).bind("contextmenu",function(e) { 
+	e.preventDefault();
+ 
+});
+$(document).keydown(function(e){
+    if(e.which === 123){
+ 
+       return false;
+ 
+    }
+ 
+});
 </script>
 </body>
 </html>

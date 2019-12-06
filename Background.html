@@ -1,52 +1,22 @@
-<!DOCTYPE html>
-<html>
 <head>
-<link rel="icon" type="image/png" href="https://www.teamcyberino.stockportdojo.org.uk/HackMarch2018/Media/favicon-32x32.png" sizes="32x32" />
-<style>
+    <style>
 #canvas {
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-z-index: -1;
-background-color: #262626;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    z-index: -1;
+    background-color: #262626;
 }
-.container{
-	z-index: 1;
-}
-body, html, a {
-				cursor: url(https://www.teamcyberino.stockportdojo.org.uk/HackMarch2018/Media/cur.png) , pointer;
-				height: 100%;
-}
-</style>
-<title>
-Book a ticket
-</title>
-<link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
-<link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32" />
-<link href="https://www.teamcyberino.stockportdojo.org.uk/HackMarch2018/Style/Button.css" rel="stylesheet">
-<link href="https://www.teamcyberino.stockportdojo.org.uk/HackMarch2018/Style/Button2.css" rel="stylesheet">
+    </style>
 </head>
-<body oncontextmenu="return false">
+<body>
+
 <canvas id="canvas">
 </canvas>
-<div class="container">
-<center>
-<font face="Acme" size="50" color="white">If you'd like to come to CoderDojo, please book a ticket here...</font>
-</center>
-<br><br>
-<center>
-<font face="Acme" size="5" color="white">...but first you need to create an account or log in.</font>
-</center>
-<br><br>
-<center>
-<a href="CreateAccount/SignUp.php"><img src="https://www.teamcyberino.stockportdojo.org.uk/HackMarch2018/Media/CA.png" class="effectscale"></a>
-<br><br>
-<center>
-<a href="CreateAccount/login.php"><img src="https://www.teamcyberino.stockportdojo.org.uk/HackMarch2018/Media/LI.png" class="effectscale"></a>
-</center>
-</div>
+
+
 <script>
 var Canvas = document.getElementById('canvas');
 var ctx = Canvas.getContext('2d');
@@ -143,4 +113,3 @@ setInterval(function() {
 }, 10);
 </script>
 </body>
-</html>

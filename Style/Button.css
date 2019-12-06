@@ -1,0 +1,23 @@
+.effectscale {
+  border: none;
+  margin: 0 auto;
+  -webkit-transform: scale(1);
+  -moz-transform: scale(1);
+  -o-transform: scale(1);
+  transform: scale(1);
+  transition: all 0.1s;
+  -webkit-transition: all 0.1s;
+}
+.effectscale:hover {
+  -webkit-transform: scale(1.2);
+  -moz-transform: scale(1.2);
+  -o-transform: scale(1.2);
+  transform: scale(1.2);
+  transition: all 0.1s;
+  -webkit-transition: all 0.1s;
+}
+
+.tab { 
+       display:inline-block; 
+       margin-left: 40px; 
+}

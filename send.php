@@ -1,52 +1,81 @@
-<!DOCTYPE html>
+
 <html>
 <head>
-<link rel="icon" type="image/png" href="https://www.teamcyberino.stockportdojo.org.uk/HackMarch2018/Media/favicon-32x32.png" sizes="32x32" />
 <style>
 #canvas {
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-z-index: -1;
-background-color: #262626;
+	position:fixed;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	z-index: -1;
+	background-color: #262626;
 }
 .container{
 	z-index: 1;
 }
+
 body, html, a {
 				cursor: url(https://www.teamcyberino.stockportdojo.org.uk/HackMarch2018/Media/cur.png) , pointer;
 				height: 100%;
 }
 </style>
-<title>
-Book a ticket
-</title>
-<link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
-<link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
+		<link rel="icon" type="image/png" href="https://teamcyberino.stockportdojo.org.uk/HackMarch2018/favicon-32x32.png" sizes="32x32" />
 <link href="https://www.teamcyberino.stockportdojo.org.uk/HackMarch2018/Style/Button.css" rel="stylesheet">
 <link href="https://www.teamcyberino.stockportdojo.org.uk/HackMarch2018/Style/Button2.css" rel="stylesheet">
+	<title>Email Sent</title>
 </head>
-<body oncontextmenu="return false">
+<body>
 <canvas id="canvas">
 </canvas>
-<div class="container">
 <center>
-<font face="Acme" size="50" color="white">If you'd like to come to CoderDojo, please book a ticket here...</font>
-</center>
+<font face="Acme" color="white" size="+4">
+<?php
+$to = $_POST['email'];
+$to2 = $_POST['email2'];
+$subject = 'Test';
+$from = 'einnefnam@gmail.com';
+
+if($to==$to2) {
+ 
+// To send HTML mail, the Content-type header must be set
+$headers  = 'MIME-Version: 1.0' . "\r\n";
+$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+ 
+// Create email headers
+//$headers .= 'From: '.$from."\r\n".
+    //'Reply-To: '.$from."\r\n" ;
+    //'X-Mailer: PHP/' . phpversion();
+ 
+// Compose a simple HTML email message
+$message = '<html><body>';
+$message .= '<h1 style="color:#f40;">Hi! </h1>';
+$message .= '<p style="color:#273679;font-size:18px;">Please click here to get your ticket!</p>';
+$message .= '<img src="https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl='.urlencode($to).'&choe=UTF-8" title="Link to Google.com" />';
+$message .= '<p style="color:#273679;font-size:18px;">'.date('l jS \of F Y h:i:s A').'</p>';
+$message .= '</body></html>';
+ 
+// Sending email
+//if(mail($to, $subject, $message, $headers)){
+if(mail($to, $subject.date('l jS \of F Y h:i:s A'), $message, $headers)){
+    echo 'Your mail has been sent successfully to ';
+    echo $to;
+} else{
+    echo 'Unable to send email. Please try again.';
+}
+
+}
+else {
+	print("E-Mails don't match!<br><br>");
+	$image_url='https://www.teamcyberino.stockportdojo.org.uk/HackMarch2018/CreateAccount/button_back.png';
+}
+?>
+<a href="send-text-email.php"><img src="<?php echo $image_url;?>" class="effectscale"></a>
 <br><br>
-<center>
-<font face="Acme" size="5" color="white">...but first you need to create an account or log in.</font>
+</font>
 </center>
-<br><br>
-<center>
-<a href="CreateAccount/SignUp.php"><img src="https://www.teamcyberino.stockportdojo.org.uk/HackMarch2018/Media/CA.png" class="effectscale"></a>
-<br><br>
-<center>
-<a href="CreateAccount/login.php"><img src="https://www.teamcyberino.stockportdojo.org.uk/HackMarch2018/Media/LI.png" class="effectscale"></a>
-</center>
-</div>
 <script>
 var Canvas = document.getElementById('canvas');
 var ctx = Canvas.getContext('2d');
@@ -141,6 +170,18 @@ setInterval(function() {
     for (var e in elements)
 		elements[e].draw(ctx, time);
 }, 10);
+$(document).bind("contextmenu",function(e) { 
+	e.preventDefault();
+ 
+});
+$(document).keydown(function(e){
+    if(e.which === 123){
+ 
+       return false;
+ 
+    }
+ 
+});
 </script>
 </body>
 </html>

@@ -1,53 +1,72 @@
-<!DOCTYPE html>
+
 <html>
 <head>
-<link rel="icon" type="image/png" href="https://www.teamcyberino.stockportdojo.org.uk/HackMarch2018/Media/favicon-32x32.png" sizes="32x32" />
 <style>
 #canvas {
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-z-index: -1;
-background-color: #262626;
+	position:fixed;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	z-index: -1;
+	background-color: #262626;
 }
 .container{
 	z-index: 1;
 }
+
 body, html, a {
 				cursor: url(https://www.teamcyberino.stockportdojo.org.uk/HackMarch2018/Media/cur.png) , pointer;
 				height: 100%;
 }
 </style>
-<title>
-Book a ticket
-</title>
-<link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
-<link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
+		<link rel="icon" type="image/png" href="https://teamcyberino.stockportdojo.org.uk/HackMarch2018/favicon-32x32.png" sizes="32x32" />
 <link href="https://www.teamcyberino.stockportdojo.org.uk/HackMarch2018/Style/Button.css" rel="stylesheet">
 <link href="https://www.teamcyberino.stockportdojo.org.uk/HackMarch2018/Style/Button2.css" rel="stylesheet">
+	<title>Enter Email</title>
 </head>
-<body oncontextmenu="return false">
-<canvas id="canvas">
+	<body>
+	<canvas id="canvas">
 </canvas>
-<div class="container">
 <center>
-<font face="Acme" size="50" color="white">If you'd like to come to CoderDojo, please book a ticket here...</font>
-</center>
-<br><br>
-<center>
-<font face="Acme" size="5" color="white">...but first you need to create an account or log in.</font>
-</center>
-<br><br>
-<center>
-<a href="CreateAccount/SignUp.php"><img src="https://www.teamcyberino.stockportdojo.org.uk/HackMarch2018/Media/CA.png" class="effectscale"></a>
-<br><br>
-<center>
-<a href="CreateAccount/login.php"><img src="https://www.teamcyberino.stockportdojo.org.uk/HackMarch2018/Media/LI.png" class="effectscale"></a>
-</center>
-</div>
-<script>
+<font face="Acme" color="white" size="+4">
+<?php
+
+if (empty($_POST["email"])) {
+    $emailErr = "";
+  } else {
+    $email = test_input($_POST["email"]);
+    // check if e-mail address is well-formed
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+      $emailErr = "Invalid email format"; 
+    }
+  }
+  
+  if (empty($_POST["email2"])) {
+    $email2Err = "";
+  } else {
+    $email2 = test_input($_POST["email2"]);
+    // check if e-mail address is well-formed
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+      $email2Err = "Invalid email format"; 
+    }
+  }
+ ?>
+ <p>For security issues, please enter your email twice.</p>
+		<form method="post" action="send.php" enctype="multipart/form-data">
+		E-Mail: <input type="text" name="email" value="<?php echo $email;?>" style="height:40px;font-size:18pt;">
+  <span class="error">* <?php echo $emailErr;?></span>
+  <br><br>
+  Retype E-Mail: <input type="text" name="email2" value="<?php echo $email2;?>" style="height:40px;font-size:18pt;">
+  <span class="error">* <?php echo $email2Err;?></span>
+  <br><br>
+		<input type="image" src="button_submit.png" name="submit" value="submit" class="effectscale">
+	</form>
+	</font>
+	</center>
+	<script>
 var Canvas = document.getElementById('canvas');
 var ctx = Canvas.getContext('2d');
 
@@ -141,6 +160,18 @@ setInterval(function() {
     for (var e in elements)
 		elements[e].draw(ctx, time);
 }, 10);
+$(document).bind("contextmenu",function(e) { 
+	e.preventDefault();
+ 
+});
+$(document).keydown(function(e){
+    if(e.which === 123){
+ 
+       return false;
+ 
+    }
+ 
+});
 </script>
-</body>
+	</body>
 </html>

@@ -1,8 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html oncontextmenu="return false">
 <head>
 <link rel="icon" type="image/png" href="https://www.teamcyberino.stockportdojo.org.uk/HackMarch2018/Media/favicon-32x32.png" sizes="32x32" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
+		<link rel="icon" type="image/png" href="https://teamcyberino.stockportdojo.org.uk/HackMarch2018/favicon-32x32.png" sizes="32x32" />
+<title>Submission Completed</title>
 <style>
+
+h1 {
+    color: white;
+}
+
+p {
+    color: white;
+}
 #canvas {
 position:fixed;
 top:0;
@@ -16,38 +28,111 @@ background-color: #262626;
 	z-index: 1;
 }
 body, html, a {
-				cursor: url(https://www.teamcyberino.stockportdojo.org.uk/HackMarch2018/Media/cur.png) , pointer;
+				cursor: url(https://www.teamcyberino.stockportdojo.org.uk/HackMarch2018/Media/cur.png) ,pointer;
 				height: 100%;
 }
 </style>
-<title>
-Book a ticket
-</title>
-<link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
-<link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32" />
-<link href="https://www.teamcyberino.stockportdojo.org.uk/HackMarch2018/Style/Button.css" rel="stylesheet">
-<link href="https://www.teamcyberino.stockportdojo.org.uk/HackMarch2018/Style/Button2.css" rel="stylesheet">
 </head>
 <body oncontextmenu="return false">
 <canvas id="canvas">
 </canvas>
 <div class="container">
+<font color="white" face="Acme" size="+4">
 <center>
-<font face="Acme" size="50" color="white">If you'd like to come to CoderDojo, please book a ticket here...</font>
+<?php 
+
+print ("Saved!<br>");
+
+$name = $_POST["name"];
+$age = $_POST["age"];
+$email = $_POST["email"];
+$event = $_POST["event"]; 
+$date = $_POST["date"]; 
+$other_info = $_POST["other_info"]; 
+$red = $_POST["https://www.teamcyberino.stockportdojo.org.uk/HackMarch2018/send-text-email.php"];
+
+if($name && $age && $email && $event && $date) {
+
+//print ("Name: " . $name . "<br>");
+//print ("D.O.B.: " . $dob . "<br>");
+//print ("Job: " . $job . "<br>");
+//print ("Company: " . $company . "<br>");
+//print ("Gender: " . $gender . "<br>");
+//print ("Email: " . $email . "<br>");
+//print ("Phone Number: " . $phone_no . "<br>");
+//print ("Tag1: " . $tag1 . "<br>");
+//print ("Tag2: " . $tag2 . "<br>");
+//print ("Tag3: " . $tag3 . "<br>");
+//print ("Profile Picture: " . $pathToImage . "<br>");
+
+
+// connect to database
+$con = mysqli_connect("deebee.hippycentral.org","teamcyberino","Recent-Purple-Belt-Propose-6","hj_danny");
+
+// Check connection
+if (mysqli_connect_errno())
+{
+    echo "Failed to connect to MySQL: " . mysqli_connect_error();
+}
+else
+{
+	echo "Connected! <br>";
+}
+
+//$filename = random_string(10);
+
+//pathToImage = "/home/teamcyberino/web/ucc.stockportdojo.org.uk/webroot/Media/ProfPic/".$filename.".png";
+//    move_uploaded_file($_FILES['file']['tmp_name'], $pathToImage);
+	
+//function random_string($length) {
+//    $key = '';
+//    $keys = array_merge(range(0, 9), range('a', 'z'));
+
+//    for ($i = 0; $i < $length; $i++) {
+ //       $key .= $keys[array_rand($keys)];
+//    }
+
+//    return $key;
+//}
+
+//$url = "https://www.ucc.stockportdojo.org.uk/Media/ProfPic/".$filename.".png";
+
+//print("INSERT INTO Ticket_Scanner set Name = '$name', Age = '$age', Email = '$email', Event = '$event', Date = '$date', Other_Info = '$other_info'");
+
+$result = mysqli_query($con, "INSERT INTO Ticket_Scanner set Name = '$name', Age = '$age', Email = '$email', Event = '$event', Date = '$date', Other_Info = '$other_info'");
+
+
+
+// Commit transaction
+mysqli_commit($con);
+
+// Close connection
+mysqli_close($con);
+
+//echo "<br>Hopefully stored in database<br>";
+//print ("result " . $result);
+
+print("Ticket Booked");
+
+print("Please wait...<br><br>");
+
+print('<img src="Loading3.gif">');
+
+echo "<meta http-equiv='refresh' content='3; URL=send-text-email.php' />";  
+
+}
+else {
+	print("Please fill in all required sections.");
+}
+
+
+?>
+
 </center>
-<br><br>
-<center>
-<font face="Acme" size="5" color="white">...but first you need to create an account or log in.</font>
-</center>
-<br><br>
-<center>
-<a href="CreateAccount/SignUp.php"><img src="https://www.teamcyberino.stockportdojo.org.uk/HackMarch2018/Media/CA.png" class="effectscale"></a>
-<br><br>
-<center>
-<a href="CreateAccount/login.php"><img src="https://www.teamcyberino.stockportdojo.org.uk/HackMarch2018/Media/LI.png" class="effectscale"></a>
-</center>
+</font>
 </div>
 <script>
+
 var Canvas = document.getElementById('canvas');
 var ctx = Canvas.getContext('2d');
 
@@ -141,6 +226,7 @@ setInterval(function() {
     for (var e in elements)
 		elements[e].draw(ctx, time);
 }, 10);
+
 </script>
 </body>
 </html>
