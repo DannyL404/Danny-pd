@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<head>
+<title>
+INSERT TITLE
+</title>
+<link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
+<link rel="icon" type="image/png" href="favicon.jpg" sizes="90x900" />
+<link href="underconstruction.css" rel="stylesheet">
+<link href="Button.css" rel="stylesheet">
+<link href="Button2.css" rel="stylesheet">
+<style>
+#canvas {
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+z-index: -1;
+background-color: #262626;
+}
+.container{
+	z-index: 1;
+}
+</style>
+</head>
+<body oncontextmenu="return false">
+<canvas id="canvas">
+</canvas>
+<div class="container">
+<center>
+<font face="Acme" size="50" color="white">Jake Peralta</font>
+</center>
+<br><br>
+<center>
+<br><font face="Acme" size="5" color="white">Born between May 21st and June 20th 1981</font></br>
+<br></br>
+<br><font face="Acme" size="5" color="white">Occupation ~ Detective at the 99th Precinct NYPD</font></br>
+
+    <td><font face="Acme" size="8" color="white">Family tree:</font></td>
+    <td><font face="Acme" size="5" color="white">•Roger Peralta (father)</font></td>
+    <td><font face="Acme" size="5" color="white">•Karen Peralta (mother)</font></td>
+    <td><font face="Acme" size="5" color="white">•Nana(grandma)</font></td>
+    <td><font face="Acme" size="5" color="white">•Kate Peralta (half- sister)</font></td>
+    <td><font face="Acme" size="5" color="white">•Two other half-sisters</font></td>
+    <td><font face="Acme" size="5" color="white">•Several half-tdothers</font></td>
+    <td><font face="Acme" size="5" color="white">•Bob (uncle)</font></td>
+    <td><font face="Acme" size="5" color="white">•Linda (aunt)</font></td>
+
+    <td><font face="Acme" size="8" color="white">Main character:</font></td>
+    <td><font face="Acme" size="5" color="white">•Cocky</font></td>
+    <td><font face="Acme" size="5" color="white">•Arrogant</font></td>
+    <td><font face="Acme" size="5" color="white">•Immature</font></td>
+    <td><font face="Acme" size="5" color="white">•Good at his job</font></td>
+    <td><font face="Acme" size="5" color="white">•Doesn’t follow the rules or work too hard.</font></td>
+    <td><font face="Acme" size="5" color="white">•Best arrest record</font></td>
+    <td><font face="Acme" size="5" color="white">•Very intelligent but focuses his attention on being funny</font></td>
+    <td><font face="Acme" size="5" color="white">•Laid Back</font></td>
+
+</div>
+<script>
+var Canvas = document.getElementById('canvas');
+var ctx = Canvas.getContext('2d');
+var resize = function() {
+    Canvas.width = Canvas.clientWidth;
+    Canvas.height = Canvas.clientHeight;
+};
+window.addEventListener('resize', resize);
+resize();
+var elements = [];
+var presets = {};
+presets.o = function (x, y, s, dx, dy) {
+    return {
+        x: x,
+        y: y,
+        r: 12 * s,
+        w: 5 * s,
+        dx: dx,
+        dy: dy,
+        draw: function(ctx, t) {
+            this.x += this.dx;
+            this.y += this.dy;
+            
+            ctx.beginPath();
+            ctx.arc(this.x + + Math.sin((50 + x + (t / 10)) / 100) * 3, this.y + + Math.sin((45 + x + (t / 10)) / 100) * 4, this.r, 0, 2 * Math.PI, false);
+            ctx.lineWidth = this.w;
+            ctx.strokeStyle = '#818181';
+            ctx.stroke();
+        }
+    }
+};
+presets.x = function (x, y, s, dx, dy, dr, r) {
+    r = r || 0;
+    return {
+        x: x,
+        y: y,
+        s: 20 * s,
+        w: 5 * s,
+        r: r,
+        dx: dx,
+        dy: dy,
+        dr: dr,
+        draw: function(ctx, t) {
+            this.x += this.dx;
+            this.y += this.dy;
+            this.r += this.dr;
+            
+            var _this = this;
+            var line = function(x, y, tx, ty, c, o) {
+                o = o || 0;
+                ctx.beginPath();
+                ctx.moveTo(-o + ((_this.s / 2) * x), o + ((_this.s / 2) * y));
+                ctx.lineTo(-o + ((_this.s / 2) * tx), o + ((_this.s / 2) * ty));
+                ctx.lineWidth = _this.w;
+                ctx.strokeStyle = '#818181';
+                ctx.stroke();
+            };
