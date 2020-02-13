@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<head>
+<title>
+Gina Linetti 
+</title>
+<link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
+<link rel="icon" type="image/png" href="favicon.jpg" sizes="90x900" />
+<link href="underconstruction.css" rel="stylesheet">
+<link href="Button.css" rel="stylesheet">
+<link href="Button2.css" rel="stylesheet">
+<style>
+#canvas {
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+z-index: -1;
+background-color: #262626;
+}
+.container{
+	z-index: 1;
+}
+
+</style>
+</head>
+<body oncontextmenu="return false">
+<canvas id="canvas">
+</canvas>
+<div class="container">
+<center>
+<font face="Acme" size="50" color="white">Gina Linetti</font>
+</center>
+<br><br>
+<center>
+    <br><font face="Acme" size="6" color="white">Born in 1981</font></br>
+    <br><font face="Acme" size="6" color="white">Occupation administrator at the 99th precinct and internet celebrity.</font></br>
+    <br><font face="Acme" size="6" color="white">Family:</font></br>
+    <br><font face="Acme" size="6" color="white">●Darlene Linetti (mother)</font></br>
+    <br><font face="Acme" size="6" color="white">●Enigma (daughter)</font></br>
+    <br><font face="Acme" size="5" color="white"> Gina Linetti is a main character of the show. She is the only civilian in the 99th Precinct and works as an administrator, she often leaves the precinct to dance or do something related to her internet fame. She left the Precinct with Captain Holt to go to the NYPD’s Public Relations Office. She is a proud member of a dance group called “Floor-Gasm” and often tries to get the squad to join in dancing and watch her routines. Gina and Jake Peralta were childhood friends and spent a lot of time at Jake’s Nana’s. When she was a teenager, she went to the Junior Police Program for at risk youth which she claims does not work, this is significant as the squad must run the program and Gina tries to change the way it is done. Jake was the main reason she got the job at the 99th precinct, she is good at saving money and proved that she is financially responsible. Gina has an odd personality, she is an extreme narcissist, very sarcastic and full of herself, however the squad regard her as harmless. She is always on her phone, and often does very little of the work she is supposed to. She is also often winding up Charles Boyle or flirting with Terry Jeffords. She believes in psychics and often has one brought to the squad, and strongly believes in astrology. Her hobbies include surfing the internet and dancing. She believes her dancing is amazing however it is viewed as weird by the others. She rarely shows that she cares for others except for Jake as they grew up together and their friendship is shown to be the strongest, she has with anyone.</font></br>
+    
+</center>
+</div>
+<script>
+var Canvas = document.getElementById('canvas');
+var ctx = Canvas.getContext('2d');
+
+var resize = function() {
+    Canvas.width = Canvas.clientWidth;
+    Canvas.height = Canvas.clientHeight;
+};
+window.addEventListener('resize', resize);
+resize();
+
+var elements = [];
+var presets = {};
+
+presets.o = function (x, y, s, dx, dy) {
+    return {
+        x: x,
+        y: y,
+        r: 12 * s,
+        w: 5 * s,
+        dx: dx,
+        dy: dy,
+        draw: function(ctx, t) {
+            this.x += this.dx;
+            this.y += this.dy;
+            
+            ctx.beginPath();
+            ctx.arc(this.x + + Math.sin((50 + x + (t / 10)) / 100) * 3, this.y + + Math.sin((45 + x + (t / 10)) / 100) * 4, this.r, 0, 2 * Math.PI, false);
+            ctx.lineWidth = this.w;
+            ctx.strokeStyle = '#818181';
+            ctx.stroke();
+        }
+    }
+};
+
+presets.x = function (x, y, s, dx, dy, dr, r) {
+    r = r || 0;
+    return {
+        x: x,
+        y: y,
+        s: 20 * s,
+        w: 5 * s,
+        r: r,
+        dx: dx,
+        dy: dy,
+        dr: dr,
+        draw: function(ctx, t) {
+            this.x += this.dx;
+            this.y += this.dy;
+            this.r += this.dr;
+            
+            var _this = this;
+            var line = function(x, y, tx, ty, c, o) {
+                o = o || 0;
+                ctx.beginPath();
+                ctx.moveTo(-o + ((_this.s / 2) * x), o + ((_this.s / 2) * y));
+                ctx.lineTo(-o + ((_this.s / 2) * tx), o + ((_this.s / 2) * ty));
+                ctx.lineWidth = _this.w;
+                ctx.strokeStyle = '#818181';
+                ctx.stroke();
+            };
+            
+            ctx.save();
+            
+            ctx.translate(this.x + Math.sin((x + (t / 10)) / 100) * 5, this.y + Math.sin((10 + x + (t / 10)) / 100) * 2);
+            ctx.rotate(this.r * Math.PI / 180);
+            
+            line(-1, -1, 1, 1, '#fff');
+            line(1, -1, -1, 1, '#fff');
+            
+            ctx.restore();
+        }
+    }
+};
+
+for(var x = 0; x < Canvas.width; x++) {
+    for(var y = 0; y < Canvas.height; y++) {
+        if(Math.round(Math.random() * 8000) == 1) {
+            var s = ((Math.random() * 5) + 1) / 10;
+            if(Math.round(Math.random()) == 1)
+                elements.push(presets.o(x, y, s, 0, 0));
+            else
+                elements.push(presets.x(x, y, s, 0, 0, ((Math.random() * 3) - 1) / 10, (Math.random() * 360)));
+        }
+    }
+}
+
+setInterval(function() {
+    ctx.clearRect(0, 0, Canvas.width, Canvas.height);
+
+    var time = new Date().getTime();
+    for (var e in elements)
+		elements[e].draw(ctx, time);
+}, 10);
+</script>
+</body>
+</html>
+
+
+
