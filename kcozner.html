@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<head>
+<title>
+Kevin Cozner
+</title>
+<link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
+<link rel="icon" type="image/png" href="favicon.jpg" sizes="90x900" />
+<link href="underconstruction.css" rel="stylesheet">
+<link href="Button.css" rel="stylesheet">
+<link href="Button2.css" rel="stylesheet">
+<style>
+#canvas {
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+z-index: -1;
+background-color: #262626;
+}
+.container{
+	z-index: 1;
+}
+
+</style>
+</head>
+<body oncontextmenu="return false">
+<canvas id="canvas">
+</canvas>
+<div class="container">
+<center>
+<font face="Acme" size="50" color="white">Kevin Cozner</font>
+</center>
+<br><br>
+<center>
+<font face="Acme" size="5" color="white">Kevin Cozner is the husband of Captain Raymond Holt, he has a Ph.D. and is a professor and head of the Classics department at Columbia University. He owns a Welsh Corgi called Cheddar with Raymond Holt. He can be viewed as snobby due to how closed up he can be, especially with the detectives at the 99. However, like his husband, he slowly opens up, including playing small pranks with his husband on Jake. He shows his softest signs around Holt and Gina and is very friendly around them. However, overall he is very serious and shows his intellectual sides frequently. He is not featured in many episodes and often plays small roles in them, due to him being a side character. Like his husband, he has weird quirks and it is often revealed that he does unexpected things, such as attend a Hula hooping class with Holt. Kevin finds Holt hilarious despite him being hilariously unfunny to everyone else, as they both have an uncommon and typically boring sense of humor. He cares deeply for his husband.; This was highlighted when Holt was lightly stabbed he insisted that the squad tell him everything and won’t stop checking up on him and the investigation. The pair met each other whilst Kevin was writing an article about Holt for the 'New Yorker' and said that Holt's answer had him in stitches.</font>
+</center>
+</div>
+<script>
+var Canvas = document.getElementById('canvas');
+var ctx = Canvas.getContext('2d');
+
+var resize = function() {
+    Canvas.width = Canvas.clientWidth;
+    Canvas.height = Canvas.clientHeight;
+};
+window.addEventListener('resize', resize);
+resize();
+
+var elements = [];
+var presets = {};
+
+presets.o = function (x, y, s, dx, dy) {
+    return {
+        x: x,
+        y: y,
+        r: 12 * s,
+        w: 5 * s,
+        dx: dx,
+        dy: dy,
+        draw: function(ctx, t) {
+            this.x += this.dx;
+            this.y += this.dy;
+            
+            ctx.beginPath();
+            ctx.arc(this.x + + Math.sin((50 + x + (t / 10)) / 100) * 3, this.y + + Math.sin((45 + x + (t / 10)) / 100) * 4, this.r, 0, 2 * Math.PI, false);
+            ctx.lineWidth = this.w;
+            ctx.strokeStyle = '#818181';
+            ctx.stroke();
+        }
+    }
+};
+
+presets.x = function (x, y, s, dx, dy, dr, r) {
+    r = r || 0;
+    return {
+        x: x,
+        y: y,
+        s: 20 * s,
+        w: 5 * s,
+        r: r,
+        dx: dx,
+        dy: dy,
+        dr: dr,
+        draw: function(ctx, t) {
+            this.x += this.dx;
+            this.y += this.dy;
+            this.r += this.dr;
+            
+            var _this = this;
+            var line = function(x, y, tx, ty, c, o) {
+                o = o || 0;
+                ctx.beginPath();
+                ctx.moveTo(-o + ((_this.s / 2) * x), o + ((_this.s / 2) * y));
+                ctx.lineTo(-o + ((_this.s / 2) * tx), o + ((_this.s / 2) * ty));
+                ctx.lineWidth = _this.w;
+                ctx.strokeStyle = '#818181';
+                ctx.stroke();
+            };
+            
+            ctx.save();
+            
+            ctx.translate(this.x + Math.sin((x + (t / 10)) / 100) * 5, this.y + Math.sin((10 + x + (t / 10)) / 100) * 2);
+            ctx.rotate(this.r * Math.PI / 180);
+            
+            line(-1, -1, 1, 1, '#fff');
+            line(1, -1, -1, 1, '#fff');
+            
+            ctx.restore();
+        }
+    }
+};
+
+for(var x = 0; x < Canvas.width; x++) {
+    for(var y = 0; y < Canvas.height; y++) {
+        if(Math.round(Math.random() * 8000) == 1) {
+            var s = ((Math.random() * 5) + 1) / 10;
+            if(Math.round(Math.random()) == 1)
+                elements.push(presets.o(x, y, s, 0, 0));
+            else
+                elements.push(presets.x(x, y, s, 0, 0, ((Math.random() * 3) - 1) / 10, (Math.random() * 360)));
+        }
+    }
+}
+
+setInterval(function() {
+    ctx.clearRect(0, 0, Canvas.width, Canvas.height);
+
+    var time = new Date().getTime();
+    for (var e in elements)
+		elements[e].draw(ctx, time);
+}, 10);
+</script>
+</body>
+</html>
+
+
+

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<head>
+<title>
+Doug Judy
+</title>
+<link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
+<link rel="icon" type="image/png" href="favicon.jpg" sizes="90x900" />
+<link href="underconstruction.css" rel="stylesheet">
+<link href="Button.css" rel="stylesheet">
+<link href="Button2.css" rel="stylesheet">
+<style>
+#canvas {
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+z-index: -1;
+background-color: #262626;
+}
+.container{
+	z-index: 1;
+}
+
+</style>
+</head>
+<body oncontextmenu="return false">
+<canvas id="canvas">
+</canvas>
+<div class="container">
+<center>
+<font face="Acme" size="50" color="white">Doug Judy</font>
+</center>
+<br><br>
+<center>
+<font face="Acme" size="5" color="white">Doug Judy is a thief, con artist and nicknamed ‘The Pontiac Bandit’ as he is notorious for stealing over 200 Pontiacs. He was the arch-enemy of Jake Peralta, however that changed when he was found to have a similar personality, immature, a love of pop culture and being very laid back towards any situation. He also has a massive crush on Rosa Diaz, who worked alongside Jake on any case to catch Doug. As mentioned before Doug Judy is very immature, and often uses jokes and silly songs to weasel out of situations with Jake. He is very calm and never loses his temper and always remains cheerful. Despite this, he is very cunning and intelligent, due to him being able to escape Jake Peralta on numerous occasions. An example of this would be in series one where he managed to convince Jake that he could lead him to the Pontiac bandit, little Jake know that he was the Pontiac bandit, and he managed to form an elaborate distraction, framing his barber. He then revealed it was, in fact, him that was the Pontiac bandit before escaping. As the show goes on many similar escapades happen, and he can escape again multiple times. Doug Judy also likes to make fun of the fact that they are arch-nemesis and make up a theme song about it. Despite being a criminal he has a sensitive side and even takes Jake and Rosa to meet his real mother so that he could say goodbye to her before he leaves. He is also capable of disliking people and showing it, for example, his adopted brother, who stole important things from him. He also is kind to the squad and makes sure that he can help them where he can, despite them frequently trying to arrest him due to him being a criminal. Doug Judy is also extremely protective of his younger sister Trudy Judy, and is reluctant to believe that she could do anything wrong and will turn out perfectly, however, when the opposite happens he still refuses to believe it. He lies to his mother about what he does with his life and she believes that he runs an architect firm, which Jake also works at.</font>
+</center>
+</div>
+<script>
+var Canvas = document.getElementById('canvas');
+var ctx = Canvas.getContext('2d');
+
+var resize = function() {
+    Canvas.width = Canvas.clientWidth;
+    Canvas.height = Canvas.clientHeight;
+};
+window.addEventListener('resize', resize);
+resize();
+
+var elements = [];
+var presets = {};
+
+presets.o = function (x, y, s, dx, dy) {
+    return {
+        x: x,
+        y: y,
+        r: 12 * s,
+        w: 5 * s,
+        dx: dx,
+        dy: dy,
+        draw: function(ctx, t) {
+            this.x += this.dx;
+            this.y += this.dy;
+            
+            ctx.beginPath();
+            ctx.arc(this.x + + Math.sin((50 + x + (t / 10)) / 100) * 3, this.y + + Math.sin((45 + x + (t / 10)) / 100) * 4, this.r, 0, 2 * Math.PI, false);
+            ctx.lineWidth = this.w;
+            ctx.strokeStyle = '#818181';
+            ctx.stroke();
+        }
+    }
+};
+
+presets.x = function (x, y, s, dx, dy, dr, r) {
+    r = r || 0;
+    return {
+        x: x,
+        y: y,
+        s: 20 * s,
+        w: 5 * s,
+        r: r,
+        dx: dx,
+        dy: dy,
+        dr: dr,
+        draw: function(ctx, t) {
+            this.x += this.dx;
+            this.y += this.dy;
+            this.r += this.dr;
+            
+            var _this = this;
+            var line = function(x, y, tx, ty, c, o) {
+                o = o || 0;
+                ctx.beginPath();
+                ctx.moveTo(-o + ((_this.s / 2) * x), o + ((_this.s / 2) * y));
+                ctx.lineTo(-o + ((_this.s / 2) * tx), o + ((_this.s / 2) * ty));
+                ctx.lineWidth = _this.w;
+                ctx.strokeStyle = '#818181';
+                ctx.stroke();
+            };
+            
+            ctx.save();
+            
+            ctx.translate(this.x + Math.sin((x + (t / 10)) / 100) * 5, this.y + Math.sin((10 + x + (t / 10)) / 100) * 2);
+            ctx.rotate(this.r * Math.PI / 180);
+            
+            line(-1, -1, 1, 1, '#fff');
+            line(1, -1, -1, 1, '#fff');
+            
+            ctx.restore();
+        }
+    }
+};
+
+for(var x = 0; x < Canvas.width; x++) {
+    for(var y = 0; y < Canvas.height; y++) {
+        if(Math.round(Math.random() * 8000) == 1) {
+            var s = ((Math.random() * 5) + 1) / 10;
+            if(Math.round(Math.random()) == 1)
+                elements.push(presets.o(x, y, s, 0, 0));
+            else
+                elements.push(presets.x(x, y, s, 0, 0, ((Math.random() * 3) - 1) / 10, (Math.random() * 360)));
+        }
+    }
+}
+
+setInterval(function() {
+    ctx.clearRect(0, 0, Canvas.width, Canvas.height);
+
+    var time = new Date().getTime();
+    for (var e in elements)
+		elements[e].draw(ctx, time);
+}, 10);
+</script>
+</body>
+</html>
+
+
+
