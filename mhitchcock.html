@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<head>
+<title>
+Micheal Hitchcock
+</title>
+<link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
+<link rel="icon" type="image/png" href="favicon.jpg" sizes="90x900" />
+<link href="underconstruction.css" rel="stylesheet">
+<link href="Button.css" rel="stylesheet">
+<link href="Button2.css" rel="stylesheet">
+<style>
+#canvas {
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+z-index: -1;
+background-color: #262626;
+}
+.container{
+	z-index: 1;
+}
+
+</style>
+</head>
+<body oncontextmenu="return false">
+<canvas id="canvas">
+</canvas>
+<div class="container">
+<center>
+<font face="Acme" size="50" color="white">Michael Hitchcock</font>
+</center>
+<br><br>
+<center>
+<font face="Acme" size="5" color="white">Detective Michael Hitchcock is one of the older male detectives at the precinct. He is a duo with Norm Scully and is just as lazy as him. Unlike the other main characters, he is referred to by his last name (and Scully as well). Hitchcock states that his job is doing nothing all day. He has been in the police for nearly 30 years and best friends with Norm Scully throughout most of it. The duo are together so often that they had been presumed to be a romantic couple at a party. The laziness is highlighted by his low arrest number in the last 12 months with 14 whilst other members of the squad have had 78. It is implied that he was once a much better and harder working detective, such as surviving being a police officer in the 1980s at a time when New York City was described as basically being a purge. As a result of this, he has the highest overall arrest record of anyone in the precinct even though he hasn’t put any effort into his work for years. Hitchcock is quite a selfish man with little concern for the people around him, he is very open about his view on people. He lives in a creepy van, which contains many questionable items. He is often seen cheating on his wife and even cheered at her death. As well as this he often creates online dating profiles with fake information. </font>
+</center>
+</div>
+<script>
+var Canvas = document.getElementById('canvas');
+var ctx = Canvas.getContext('2d');
+
+var resize = function() {
+    Canvas.width = Canvas.clientWidth;
+    Canvas.height = Canvas.clientHeight;
+};
+window.addEventListener('resize', resize);
+resize();
+
+var elements = [];
+var presets = {};
+
+presets.o = function (x, y, s, dx, dy) {
+    return {
+        x: x,
+        y: y,
+        r: 12 * s,
+        w: 5 * s,
+        dx: dx,
+        dy: dy,
+        draw: function(ctx, t) {
+            this.x += this.dx;
+            this.y += this.dy;
+            
+            ctx.beginPath();
+            ctx.arc(this.x + + Math.sin((50 + x + (t / 10)) / 100) * 3, this.y + + Math.sin((45 + x + (t / 10)) / 100) * 4, this.r, 0, 2 * Math.PI, false);
+            ctx.lineWidth = this.w;
+            ctx.strokeStyle = '#818181';
+            ctx.stroke();
+        }
+    }
+};
+
+presets.x = function (x, y, s, dx, dy, dr, r) {
+    r = r || 0;
+    return {
+        x: x,
+        y: y,
+        s: 20 * s,
+        w: 5 * s,
+        r: r,
+        dx: dx,
+        dy: dy,
+        dr: dr,
+        draw: function(ctx, t) {
+            this.x += this.dx;
+            this.y += this.dy;
+            this.r += this.dr;
+            
+            var _this = this;
+            var line = function(x, y, tx, ty, c, o) {
+                o = o || 0;
+                ctx.beginPath();
+                ctx.moveTo(-o + ((_this.s / 2) * x), o + ((_this.s / 2) * y));
+                ctx.lineTo(-o + ((_this.s / 2) * tx), o + ((_this.s / 2) * ty));
+                ctx.lineWidth = _this.w;
+                ctx.strokeStyle = '#818181';
+                ctx.stroke();
+            };
+            
+            ctx.save();
+            
+            ctx.translate(this.x + Math.sin((x + (t / 10)) / 100) * 5, this.y + Math.sin((10 + x + (t / 10)) / 100) * 2);
+            ctx.rotate(this.r * Math.PI / 180);
+            
+            line(-1, -1, 1, 1, '#fff');
+            line(1, -1, -1, 1, '#fff');
+            
+            ctx.restore();
+        }
+    }
+};
+
+for(var x = 0; x < Canvas.width; x++) {
+    for(var y = 0; y < Canvas.height; y++) {
+        if(Math.round(Math.random() * 8000) == 1) {
+            var s = ((Math.random() * 5) + 1) / 10;
+            if(Math.round(Math.random()) == 1)
+                elements.push(presets.o(x, y, s, 0, 0));
+            else
+                elements.push(presets.x(x, y, s, 0, 0, ((Math.random() * 3) - 1) / 10, (Math.random() * 360)));
+        }
+    }
+}
+
+setInterval(function() {
+    ctx.clearRect(0, 0, Canvas.width, Canvas.height);
+
+    var time = new Date().getTime();
+    for (var e in elements)
+		elements[e].draw(ctx, time);
+}, 10);
+</script>
+</body>
+</html>
+
+
+
