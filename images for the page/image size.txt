@@ -1,2 +1,7 @@
 800 wide 
 400 high
+
+
+character image bgox size 
+width 150
+height 200
